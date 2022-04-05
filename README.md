@@ -9,11 +9,13 @@ JAX is capable of taking gradients with respect to variables accumulated within 
 (see e.g. the last section ("Linear regression with Pytrees") of
 https://flax.readthedocs.io/en/latest/notebooks/jax_for_the_impatient.html)
 
-Here is a simple test performed on February 22, 2022:
+Here is a simple test performed on February 22, 2022 (Ubuntu 20.04.3 LTS, Python 3.8.10, JAX 0.3.0, tree-math 0.1.0):
 
 It is convenient to use the https://github.com/google/tree-math/ library.
 
-We take a gradient of sum of `tree_map(relu, x)` over a nested dictionary `x`.
+We take a gradient of sum of `tree_map(relu, x)` with respect to a nested dictionary `x`.
+
+Note that despite the JAX reputation of being "static", we can change the shape of the dictionary `x` on the fly and `grad_f` keeps working correctly.
 
 ```python
 >>> from jax.nn import relu
