@@ -2,7 +2,15 @@
 
 I am exploring a possibility to resume my JAX work in parallel with my Julia work.
 
-I used the newly available ability to install JAX on Windows 10 in CPU-only mode
+In particular, I am pondering an option of porting Julia code from
+
+https://github.com/anhinga/late-2022-julia-drafts/tree/main/dmm-port-from-clojure/using-Zygote
+
+to JAX using https://github.com/google/tree-math
+
+---
+
+I used the newly available ability to install JAX on Windows 10 in CPU-only mode:
 
 `pip install --upgrade "jax[cpu]"`
 
