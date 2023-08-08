@@ -14,7 +14,7 @@ I used the newly available ability to install JAX on Windows 10 in CPU-only mode
 
 `pip install --upgrade "jax[cpu]"`
 
-and reproduced the example from the README of this repository
+and reproduced the example from the README of this repository (JAX 0.4.14, tree-math 0.2.0)
 
 `pip install tree-math`
 
