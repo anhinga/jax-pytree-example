@@ -10,6 +10,16 @@ to JAX using https://github.com/google/tree-math
 
 ---
 
+PyTree resources:
+
+Working with Pytrees: https://jax.readthedocs.io/en/latest/jax-101/05.1-pytrees.html
+
+Pytrees: https://jax.readthedocs.io/en/latest/pytrees.html
+
+`jax.tree_util` module: https://jax.readthedocs.io/en/latest/jax.tree_util.html
+
+---
+
 I used the newly available ability to install JAX on Windows 10 in CPU-only mode:
 
 `pip install --upgrade "jax[cpu]"`
