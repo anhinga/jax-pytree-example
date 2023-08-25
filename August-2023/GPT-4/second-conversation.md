@@ -99,4 +99,56 @@ This code uses dictionary unpacking to immutably merge the dictionaries and hand
 
 Note: If you're going to use JAX to compute gradients, be cautious when working with Python dictionaries, as JAX is not designed to work with non-array data types. The gradients would be specific to the array leaves, and the structure of the pytree should not affect the differentiation process.
 
-COMMENTARY: That's better, but we are still losing the numerical leaf. We probably want to apply my favorite trick with replacing `N` with `{":number" N}` in this case.
+COMMENTARY: That's better, but we are still losing the numerical leaf. We probably want to apply my favorite trick with replacing `N` with `{':number' N}` in this case.
+
+ME: Thanks! I love how you use ** in return {**common_key_values, **only_tree1_key_values, **only_tree2_key_values}. The only problem is that if there are duplicate keys, the second key would override the first. For example, if tree2 is {'a': 5, 'b': {'c': 6}, 'f': 7} and tree3 is {'b': 7}, then {**tree2, **tree3} would result in {'a': 5, 'b': 7, 'f': 7}. I think I'd like 'b':7 to be pushed to the next level in this case, resulting in something like {'a': 5, 'b': {'c': 6, ':number': 7}, 'f': 7}.
+
+GPT-4: Ah, yes, you're right! If two keys conflict, where one maps to a dictionary and the other maps to a leaf node, we could decide on a special key (like `':number'` as you suggested) to store the leaf node in the dictionary. This way, the key won't be overwritten. Here's how you could do it:
+
+```python
+def merge_pytrees(tree1, tree2, f, leaf_key=':number'):
+    if not isinstance(tree1, dict) and not isinstance(tree2, dict):
+        return f(tree1, tree2)
+    
+    if isinstance(tree1, dict) and isinstance(tree2, dict):
+        # Merge dictionaries immutably
+        common_keys = set(tree1.keys()) & set(tree2.keys())
+        only_tree1_keys = set(tree1.keys()) - common_keys
+        only_tree2_keys = set(tree2.keys()) - common_keys
+
+        common_key_values = {key: merge_pytrees(tree1[key], tree2[key], f, leaf_key) for key in common_keys}
+        only_tree1_key_values = {key: tree1[key] for key in only_tree1_keys}
+        only_tree2_key_values = {key: tree2[key] for key in only_tree2_keys}
+
+        return {**common_key_values, **only_tree1_key_values, **only_tree2_key_values}
+
+    # If tree1 is a dictionary but tree2 is a leaf node
+    if isinstance(tree1, dict):
+        return {leaf_key: f(tree1.get(leaf_key, None), tree2), **{key: merge_pytrees(value, None, f, leaf_key) for key, value in tree1.items()}}
+
+    # If tree2 is a dictionary but tree1 is a leaf node
+    if isinstance(tree2, dict):
+        return {leaf_key: f(tree1, tree2.get(leaf_key, None)), **{key: merge_pytrees(None, value, f, leaf_key) for key, value in tree2.items()}}
+
+# Example usage:
+tree1 = {'a': 1, 'b': {'c': 2, 'd': 3}, 'e': 4}
+tree2 = {'a': {'z': 0}, 'b': {'c': 6}, 'f': 7}
+tree3 = {'b': 7}
+
+def add(x, y):
+    return x + y if x is not None and y is not None else x or y
+
+result1 = merge_pytrees(tree1, tree2, add)
+result2 = merge_pytrees(tree2, tree3, add)
+print(result1)
+print(result2)
+```
+
+This should result in the following output:
+
+```python
+{'a': {':number': 1, 'z': 0}, 'b': {'c': 8, 'd': 3}, 'e': 4, 'f': 7}
+{'a': {'z': 0}, 'b': {':number': 7, 'c': 6}, 'f': 7}
+```
+
+Here I've added a special key `':number'` to hold the leaf node value when it conflicts with a dictionary. This way, the key `'b'` can map to both a leaf node and a nested dictionary at the same time.
