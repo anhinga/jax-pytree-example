@@ -1,4 +1,4 @@
-https://chat.openai.com/share/6d847125-e4a7-4ec9-a0e2-87b15d7be2c9
+https://chat.openai.com/share/86553014-a143-4b3c-8602-7d9b5e017343
 
 ME: Let's talk about Python JAX. I'd like to build a pytree which is a union of two different pytrees. 
 
