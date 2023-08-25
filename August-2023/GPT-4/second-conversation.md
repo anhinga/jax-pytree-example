@@ -49,4 +49,52 @@ The function `merge_pytrees` merges two pytrees, applying the function `f` to th
 
 You can replace `add` with any function you'd like to apply to the overlapping leaves.
 
-MY COMMENTARY: Yes, this looks right. This is great, superuseful!
+MY COMMENTARY: Yes, this looks right.
+
+But on further reflection, this has some defects. Let's continue the conversation.
+
+ME: Yes, that's great. I'd like the following two changes. This code does not work correctly when in one the trees a key maps to a number and in another tree the same key maps to a dictionary. Another change I'd like to see, I'd like to do this in immutable style (so that, for example, I would be able to ask JAX to take gradients through this code). 
+
+GPT-4: To handle the case where a key maps to different types in each tree (a leaf node in one tree and a subtree in another), you can modify the `merge_pytrees` function to check the types before attempting to merge them. You can also make the code more immutable by avoiding the modification of existing dictionaries.
+
+Here's the updated code:
+
+```python
+def merge_pytrees(tree1, tree2, f):
+    if not isinstance(tree1, dict) and not isinstance(tree2, dict):
+        return f(tree1, tree2)
+    
+    if isinstance(tree1, dict) and isinstance(tree2, dict):
+        # Merge dictionaries immutably
+        common_keys = set(tree1.keys()) & set(tree2.keys())
+        only_tree1_keys = set(tree1.keys()) - common_keys
+        only_tree2_keys = set(tree2.keys()) - common_keys
+
+        common_key_values = {key: merge_pytrees(tree1[key], tree2[key], f) for key in common_keys}
+        only_tree1_key_values = {key: tree1[key] for key in only_tree1_keys}
+        only_tree2_key_values = {key: tree2[key] for key in only_tree2_keys}
+
+        return {**common_key_values, **only_tree1_key_values, **only_tree2_key_values}
+
+    # If tree1 is a dictionary but tree2 is a leaf node
+    if isinstance(tree1, dict):
+        return {key: merge_pytrees(value, None, f) for key, value in tree1.items()}
+
+    # If tree2 is a dictionary but tree1 is a leaf node
+    if isinstance(tree2, dict):
+        return {key: merge_pytrees(None, value, f) for key, value in tree2.items()}
+
+# Example usage:
+tree1 = {'a': 1, 'b': {'c': 2, 'd': 3}, 'e': 4}
+tree2 = {'a': {'z': 0}, 'b': {'c': 6}, 'f': 7}
+
+def add(x, y):
+    return x + y if x is not None and y is not None else x or y
+
+result = merge_pytrees(tree1, tree2, add)
+print(result)
+```
+
+This code uses dictionary unpacking to immutably merge the dictionaries and handles cases where a key in one tree maps to a leaf node and the same key in another tree maps to a subtree.
+
+Note: If you're going to use JAX to compute gradients, be cautious when working with Python dictionaries, as JAX is not designed to work with non-array data types. The gradients would be specific to the array leaves, and the structure of the pytree should not affect the differentiation process.
