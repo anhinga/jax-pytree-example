@@ -98,3 +98,5 @@ print(result)
 This code uses dictionary unpacking to immutably merge the dictionaries and handles cases where a key in one tree maps to a leaf node and the same key in another tree maps to a subtree.
 
 Note: If you're going to use JAX to compute gradients, be cautious when working with Python dictionaries, as JAX is not designed to work with non-array data types. The gradients would be specific to the array leaves, and the structure of the pytree should not affect the differentiation process.
+
+COMMENTARY: That's better, but we are still losing the numerical leaf. We probably want to apply my favorite trick with replacing `N` with `{":number" N}` in this case.
