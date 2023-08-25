@@ -48,3 +48,5 @@ This will output:
 The function `merge_pytrees` merges two pytrees, applying the function `f` to the leaves that end up in the same path. For this example, `f` is the `add` function that adds two numbers if they are both not `None`, and returns the one that's not `None` otherwise.
 
 You can replace `add` with any function you'd like to apply to the overlapping leaves.
+
+MY COMMENTARY: Yes, this looks right. This is great, superuseful!
