@@ -64,3 +64,9 @@ Array(24., dtype=float32)
 {'deeper': {'inner': Array([0., 1., 0.], dtype=float32)}, 'x': Array([1., 0.], dtype=float32), 'y': Array([1., 0.], dtype=float32)}
 >>>
 ```
+
+---
+
+[first_sketches.py](first_sketches.py) - a nice immutable port of `mult-v-value`
+
+[GPT-4/second-conversation.md](GPT-4/second-conversation.md) - GPT-4 created what is effectively a nice immutable port of `add-v-values`
