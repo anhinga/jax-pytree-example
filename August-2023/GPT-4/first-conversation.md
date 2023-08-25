@@ -84,3 +84,30 @@ Here's the explanation for each part of the code:
    3. `helper` is a function that takes corresponding elements (leaves) from `mult_mask` and `v_value` and applies the operations specified in your original Julia function.
 
 The Python code should capture the essence of your Julia code while making it compatible with JAX's immutable data structures.
+
+MY COMMENTARY:
+
+`tree_multimap` was replaced by an upgrade of the `tree_map` functionality. So the candidate code would be
+
+```python
+from jax.tree_util import tree_map
+
+def mult_mask_v_value(mult_mask, v_value):
+    def helper(mask, value):
+        if isinstance(mask, (int, float)) and isinstance(value, (int, float)):
+            return mask * value
+        elif isinstance(mask, (int, float)):
+            return tree_map(lambda x: mask * x, value)
+        elif isinstance(value, (int, float)):
+            return None  # Corresponds to "result[k] is not created" in Julia code
+        else:
+            return mult_mask_v_value(mask, value)
+    
+    return tree_map(helper, mult_mask, v_value)
+```
+
+Unfortunately, this is still not right. The documentation says:
+
+https://jax.readthedocs.io/en/latest/_autosummary/jax.tree_util.tree_map.html
+
+> **rest** (_Any_) – a tuple of pytrees, each of which has the same structure as `tree` or has `tree` as a prefix.
