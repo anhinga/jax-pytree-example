@@ -53,3 +53,46 @@ In this version, the function `merge_multiple_pytrees` accepts a function `f` an
 The function `add` is also modified to accept a variable number of arguments and sum all of them. This ensures that the function `f` passed to `merge_multiple_pytrees` can handle any number of trees.
 
 With this setup, the function should be able to merge any number of pytrees.
+
+ME: That's very cool! Could you write an immutable version of `merge_multiple_pytrees`?
+
+GPT-4: Certainly! Below is an immutable version of `merge_multiple_pytrees`. The function does not modify any input dictionaries and returns a new dictionary every time it's called:
+
+```python
+def merge_multiple_pytrees(f, leaf_key=':number', *trees):
+    if all(tree is None or not isinstance(tree, dict) for tree in trees):
+        return f(*trees)
+    
+    # Collect all keys across all trees
+    all_keys = set(key for tree in trees if isinstance(tree, dict) for key in tree.keys())
+    
+    merged = {
+        key: merge_multiple_pytrees(f, leaf_key, *[tree.get(key, None) if isinstance(tree, dict) else None for tree in trees])
+        for key in all_keys
+    }
+
+    if any(tree is not None and not isinstance(tree, dict) for tree in trees):
+        leaf_values = [tree if not isinstance(tree, dict) else tree.get(leaf_key, None) for tree in trees]
+        return {leaf_key: f(*leaf_values), **merged}
+    
+    return merged
+
+# Example usage:
+tree1 = {'a': 1, 'b': {'c': 2, 'd': 3}, 'e': 4}
+tree2 = {'a': {'z': 0}, 'b': {'c': 6}, 'f': 7}
+tree3 = {'b': 7, 'g': {'h': 8}}
+
+def add(*args):
+    return sum(x for x in args if x is not None)
+
+result = merge_multiple_pytrees(add, ':number', tree1, tree2, tree3)
+print(result)
+```
+
+Output:
+
+```python
+{'a': {':number': 1, 'z': 0}, 'b': {':number': 7, 'c': 8, 'd': 3}, 'e': 4, 'f': 7, 'g': {'h': 8}}
+```
+
+In this immutable version, I used dictionary comprehensions to create new dictionaries rather than updating existing ones. This should allow you to use the function in contexts requiring immutability, such as when working with JAX.
