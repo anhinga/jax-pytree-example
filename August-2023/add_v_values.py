@@ -1,3 +1,4 @@
+""" obsolete version
 def add_v_values(a_v_value, b_v_value):
     if not isinstance(a_v_value, dict) and not isinstance(b_v_value, dict): # two numbers
         return a_v_value + b_v_value    
@@ -13,6 +14,23 @@ def add_v_values(a_v_value, b_v_value):
         return add_v_values(a_v_value, {':number': b_v_value})
     if isinstance(b_v_value, dict): # a_v_value is a leaf
         return add_v_values(b_v_value, {':number': a_v_value})
+"""
+
+# new shiny multi-argument version
+
+def add_v_values(*v_values):
+    trees = [v_value for v_value in v_values if isinstance(v_value, dict)]
+    numbers = [v_value for v_value in v_values if not isinstance(v_value, dict)]   
+    if not trees:
+        return sum(numbers)
+    all_trees = [*trees, {':number': sum(numbers)}] if numbers else trees
+    all_keys = frozenset(key for tree in all_trees for key in tree.keys())  
+    merged = {
+        key: add_v_values(*[tree[key] for tree in all_trees if key in tree])
+        for key in all_keys
+    } 
+    return merged
+        
 
 # Example usage:
 tree1 = {'a': 1, 'b': {'c': 2, 'd': 3}, 'e': 4}
