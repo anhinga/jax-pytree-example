@@ -96,3 +96,8 @@ Output:
 ```
 
 In this immutable version, I used dictionary comprehensions to create new dictionaries rather than updating existing ones. This should allow you to use the function in contexts requiring immutability, such as when working with JAX.
+
+MY COMMENTARY: There are some defects here, but this code is very helpful when one needs to think about this problem.
+
+The reason I need to think about this problem is that while `add_v_values` is using two arguments, the logic
+of `mult_mask_lin_comb` applies it multiple times; so one really needs a multiargument version of `add_v_values`.
