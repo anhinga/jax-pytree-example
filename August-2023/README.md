@@ -10,6 +10,16 @@ to JAX using https://github.com/google/tree-math
 
 ---
 
+Work in progress:
+
+[immutable_ops.py](immutable_ops.py) - V-value operations (a nicely compact code, looks good)
+
+---
+---
+---
+
+### Auxiliary
+
 PyTree resources:
 
 Working with Pytrees: https://jax.readthedocs.io/en/latest/jax-101/05.1-pytrees.html
@@ -67,6 +77,18 @@ Array(24., dtype=float32)
 
 ---
 
-[first_sketches.py](first_sketches.py) - a nice immutable port of `mult-v-value`
+### Work files
 
-[GPT-4/second-conversation.md](GPT-4/second-conversation.md) - GPT-4 created what is effectively a nice immutable port of `add-v-values`
+  * [immutable_ops.py](immutable_ops.py) - V-value operations (a nicely compact code, looks good)
+
+     * The following auxiliary skethces were used in making it
+
+     * [first_sketches.py](first_sketches.py) - a nice immutable port of `mult-v-value`
+
+     * [GPT-4/second-conversation.md](GPT-4/second-conversation.md) - GPT-4 created what is effectively a nice immutable port of `add-v-values`
+   
+        * [GPT-4/extras/continue-second-conversation.md](GPT-4/extras/continue-second-conversation.md) - a variadic version
+
+     * [add_v_values.py](add_v_values.py) - old two-argument version and a better variadic version of `add_v_values`
+   
+     * [mult_mask_and_grad.py](mult_mask_and_grad.py) - `mult-mask-v-value` and a gradient computation
