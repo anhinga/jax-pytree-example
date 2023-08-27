@@ -41,3 +41,12 @@ pprint(initial_output)
 #  'update-3': {':function': {'update_3': 1.0},
 #               'result': {'self': {'delta': {'update-1': {'result': 1.0},
 #                                             'update-3': {'result': -1.0}}}}}}
+
+step1 = two_stroke_cycle(initial_output)
+pprint(step1)
+step2 = two_stroke_cycle(step1['output'])
+pprint(step2)
+step3 = two_stroke_cycle(step2['output'])
+pprint(step3)
+step4 = two_stroke_cycle(step3['output'])
+pprint(step4)
