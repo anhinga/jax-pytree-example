@@ -1,3 +1,5 @@
+# self-referential machine
+
 init_matrix_elements = [matrix_element("self", "accum", "self", "result"),
                         matrix_element("self", "delta", "update-1", "result"),
                         matrix_element("self", ":function", "self", ":function"), 
