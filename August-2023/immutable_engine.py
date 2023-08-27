@@ -16,9 +16,11 @@ def matrix_element(to_neuron, to_input, from_neuron, from_output, value = 1.0):
 def update_1(all_inputs):
     return {'result': add_v_values(matrix_element('self', 'delta', 'update-1', 'result', -1.0),
                                    matrix_element('self', 'delta', 'update-2', 'result'))}
+
 def update_2(all_inputs):
     return {'result': add_v_values(matrix_element('self', 'delta', 'update-2', 'result', -1.0),
                                    matrix_element('self', 'delta', 'update-3', 'result'))}
+
 def update_3(all_inputs):
     return {'result': add_v_values(matrix_element('self', 'delta', 'update-3', 'result', -1.0),
                                    matrix_element('self', 'delta', 'update-1', 'result'))}
