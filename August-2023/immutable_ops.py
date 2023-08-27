@@ -50,3 +50,17 @@ mult_mask_lin_comb(dict_a, dict_f)
 # {':number': 28.0, 'u': 2.5}
 mult_mask_lin_comb(dict_f, dict_a)
 # 13.0
+
+# gradients also work
+# for example
+
+from jax import grad
+def self_apply(x):
+    return mult_mask_lin_comb(x, x)
+
+self_apply(dict_f)
+# 50.0
+
+grad_self_apply = grad(self_apply)
+grad_self_apply(dict_f)
+# {'a': Array(4., dtype=float32, weak_type=True), 'b': Array(6., dtype=float32, weak_type=True), 'c': {':number': Array(12., dtype=float32, weak_type=True), 'u': Array(2., dtype=float32, weak_type=True)}}
