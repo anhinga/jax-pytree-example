@@ -7,4 +7,7 @@ init_matrix_elements = [matrix_element("self", "accum", "self", "result"),
 
 init_matrix = {'result': add_v_values(*init_matrix_elements)}
 
-
+initial_output = {'self': add_v_values(init_matrix, {':function': {'accum_add_args': 1.0}}),
+                  'update-1': add_v_values(update_1({}), {':function': {'update_1': 1.0}}),
+                  'update-2': add_v_values(update_2({}), {':function': {'update_2': 1.0}}),
+                  'update-3': add_v_values(update_3({}), {':function': {'update_3': 1.0}})}
