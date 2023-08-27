@@ -14,6 +14,10 @@ Work in progress:
 
 [immutable_ops.py](immutable_ops.py) - V-value operations (a nicely compact code, looks good)
 
+[immutable_engine.py](immutable_engine.py) - two-stroke cycle
+
+[immutable_machine.py](immutable_machine.py) - a self-referential machine (works fine)
+
 ---
 ---
 ---
