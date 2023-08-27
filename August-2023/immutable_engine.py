@@ -41,3 +41,8 @@ def up_movement_helper(input_tree):
 
 def up_movement(all_input_trees):
     return {neuron_name: up_movement_helper(all_input_trees[neuron_name]) for neuron_name in all_input_trees.keys()}
+
+def two_stroke_cycle(current_output):
+    new_input = apply_v_valued_matrix(current_output["self"]["result"], current_output, 2)
+    new_output = up_movement(new_input)
+    return {'input': new_input, 'output': new_output}
