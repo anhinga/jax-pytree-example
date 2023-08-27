@@ -3,7 +3,7 @@
 def apply_v_valued_matrix(v_valued_matrix, v_valued_args, level):
     if level==0:
         return mult_mask_lin_comb(v_valued_matrix, v_valued_args)
-    return {key: apply_v_valued_matrix(v_valued_matrix[key], v_valued_args, level-1) for key in v_values_matrix.keys()}
+    return {key: apply_v_valued_matrix(v_valued_matrix[key], v_valued_args, level-1) for key in v_valued_matrix.keys()}
 
 # activations
 
