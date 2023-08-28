@@ -18,6 +18,8 @@ Work in progress:
 
 [immutable_machine.py](immutable_machine.py) - a self-referential machine (works fine)
 
+[testing-some-gradients.py](testing-some-gradients.py) - gradient computations which were broken in mutable code for Zygote.jl work fine here (we should consider creating immutable Julia project of this kind); not a Python script, but *.py-approppriate coloring is making it easier to read
+
 ---
 ---
 ---
