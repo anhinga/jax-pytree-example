@@ -28,7 +28,17 @@ def update_3(all_inputs):
 # activations needed for Section 3 of https://arxiv.org/abs/1606.09470
 
 def max_norm_dict(all_inputs):
-    return {'result': max_norm(getv(all_inputs, 'dict'))} 
+    return {'result': max_norm(getv(all_inputs, 'dict'))}
+
+def dot_product(all_inputs):
+    result = mult_mask_lin_comb(getv(all_inputs, 'x'), getv(all_inputs, 'y'))
+    return  {'result': {':number': 0.0}, 'warning': {':number': 1.0}} if isinstance(result, dict) else {'result': {':number': result}, 'warning': {':number': 0.0}}
+
+def compare_scalars(all_inputs):
+    x_dict, y_dict = getv(all_inputs, 'x'), getv(all_inputs, 'y')
+    x = getn(x_dict)
+    y = getn(y_dict)
+    return {'true': {':number': relu(x-y)}, 'false': {':number': relu(y-x)}}
 
 activation_functions = {'accum_add_args': accum_add_args,
                         'update_1': update_1,
