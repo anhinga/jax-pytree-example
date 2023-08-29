@@ -12,6 +12,8 @@ to JAX using https://github.com/google/tree-math
 
 Work in progress:
 
+[immutable_utils.py](immutable_utils.py) - utilities
+
 [immutable_ops.py](immutable_ops.py) - V-value operations (a nicely compact code, looks good)
 
 [immutable_engine.py](immutable_engine.py) - two-stroke cycle
@@ -19,6 +21,8 @@ Work in progress:
 [immutable_machine.py](immutable_machine.py) - a self-referential machine (works fine)
 
 [testing-some-gradients.py](testing-some-gradients.py) - gradient computations which were broken in mutable code for Zygote.jl work fine here (we should consider creating immutable Julia project of this kind); not a Python script, but *.py-approppriate coloring is making it easier to read
+
+  * [testing_some_gradients_trimmed_output.py](testing_some_gradients_trimmed_output.py) - better output using `trim_v_value` utility
 
 ---
 ---
