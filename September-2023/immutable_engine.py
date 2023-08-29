@@ -1,34 +1,10 @@
+
 # down-movement
 
 def apply_v_valued_matrix(v_valued_matrix, v_valued_args, level):
     if level==0:
         return mult_mask_lin_comb(v_valued_matrix, v_valued_args)
     return {key: apply_v_valued_matrix(v_valued_matrix[key], v_valued_args, level-1) for key in v_valued_matrix.keys()}
-
-# activations
-
-def accum_add_args(all_inputs):
-    return {'result': add_v_values(all_inputs['accum'], all_inputs['delta'])}
-
-def matrix_element(to_neuron, to_input, from_neuron, from_output, value = 1.0):
-    return {to_neuron: {to_input: {from_neuron: {from_output: value}}}}
-
-def update_1(all_inputs):
-    return {'result': add_v_values(matrix_element('self', 'delta', 'update-1', 'result', -1.0),
-                                   matrix_element('self', 'delta', 'update-2', 'result'))}
-
-def update_2(all_inputs):
-    return {'result': add_v_values(matrix_element('self', 'delta', 'update-2', 'result', -1.0),
-                                   matrix_element('self', 'delta', 'update-3', 'result'))}
-
-def update_3(all_inputs):
-    return {'result': add_v_values(matrix_element('self', 'delta', 'update-3', 'result', -1.0),
-                                   matrix_element('self', 'delta', 'update-1', 'result'))}
-
-activation_functions = {'accum_add_args': accum_add_args,
-                        'update_1': update_1,
-                        'update_2': update_2,
-                        'update_3': update_3}
 
 # superfluid version of up-movement
 

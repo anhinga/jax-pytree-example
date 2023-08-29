@@ -3,3 +3,6 @@ def max_norm(v_value): # we'll also have a slightly different activation functio
 
 def trim_v_value(v_value, threshold): # keeping paths with max_norm strictly above treshold; keeping scalars
     return v_value if not isinstance(v_value, dict) else {key: trim_v_value(v_value[key], threshold) for key in v_value.keys() if max_norm(v_value[key]) > threshold}
+
+def getv(v_value, key):
+    return v_value.get(key, {})
