@@ -47,14 +47,26 @@ def const_end(all_inputs):
     return {'char': {'.': 1.0}}
 
 def timer_add_one(all_inputs):
-    return {'timer': getn(getv(all_inputs, 'timer')) + 1.0}
+    return {'timer': {':number': getn(getv(all_inputs, 'timer')) + 1.0}}
 
 def input_dummy(all_inputs):
     t = relu(getn(getv(all_inputs, 'timer')))
+    s = "test string."
     i = min(round(t // 10), len(s) - 1)
     return {'char': {s[i:i+1]: 1.0} if t % 10 == 0 else {}}
 
+def output_dummy(all_inputs):
+    return {'dict-1': getv(all_inputs, 'dict-1'), 'dict-2': getv(all_inputs, 'dict-2')}
+
 activation_functions = {'accum_add_args': accum_add_args,
+                        'max_norm_dict': max_norm_dict,
+                        'dot_product': dot_product,
+                        'compare_scalars': compare_scalars,
+                        'const_1': const_1,
+                        'const_end': const_end,
+                        'timer_add_one': timer_add_one,
+                        'input_dummy': input_dummy,
+                        'output_dummy': output_dummy,
                         'update_1': update_1,
                         'update_2': update_2,
                         'update_3': update_3}
