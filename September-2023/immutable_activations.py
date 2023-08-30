@@ -40,6 +40,20 @@ def compare_scalars(all_inputs):
     y = getn(y_dict)
     return {'true': {':number': relu(x-y)}, 'false': {':number': relu(y-x)}}
 
+def const_1(all_inputs):
+    return {'const_1': {':number': 1.0}}
+
+def const_end(all_inputs):
+    return {'char': {'.': 1.0}}
+
+def timer_add_one(all_inputs):
+    return {'timer': getn(getv(all_inputs, 'timer')) + 1.0}
+
+def input_dummy(all_inputs):
+    t = relu(getn(getv(all_inputs, 'timer')))
+    i = min(round(t // 10), len(s) - 1)
+    return {'char': {s[i:i+1]: 1.0} if t % 10 == 0 else {}}
+
 activation_functions = {'accum_add_args': accum_add_args,
                         'update_1': update_1,
                         'update_2': update_2,

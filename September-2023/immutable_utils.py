@@ -1,3 +1,4 @@
+
 def max_norm(v_value): # we'll also have a slightly different activation function of this kind: v_value -> {'result': max_norm(v_value)} 
     return abs(v_value) if not isinstance(v_value, dict) else max([max_norm(v_value[key]) for key in v_value.keys()])
 

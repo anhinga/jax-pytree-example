@@ -1,3 +1,4 @@
+
 # self-referential machine
 
 init_matrix_elements = [matrix_element("self", "accum", "self", "result"),
