@@ -31,6 +31,8 @@ def max_norm_dict(all_inputs):
     return {'norm': {':number': max_norm(getv(all_inputs, 'dict'))}}
 
 def dot_product(all_inputs):
+    print(getv(all_inputs, 'x'))
+    print(getv(all_inputs, 'y'))
     result = mult_mask_lin_comb(getv(all_inputs, 'x'), getv(all_inputs, 'y'))
     return  {'dot': {':number': 0.0}, 'warning': {':number': 1.0}} if isinstance(result, dict) else {'dot': {':number': result}, 'warning': {':number': 0.0}}
 
