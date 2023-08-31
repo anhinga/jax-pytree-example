@@ -37,7 +37,7 @@ initial_output = {'self': add_v_values(init_matrix, {':function': {'accum_add_ar
                   'timer': add_v_values({'timer': {':number': 0.0}}, {':function': {'timer_add_one': 1.0}}),
                   'input': {':function': {'input_dummy': 1.0}},
                   'accum': {':function': {'accum_add_args': 1.0}},
-                  'norm': {':function': {'max_norm_dict': 1.0}},
+                  'norm': add_v_values({'norm': {':number': 1.0}}, {':function': {'max_norm_dict': 1.0}}),
                   'const_1': add_v_values({'const_1': {':number': 1.0}}, {':function': {'const_1': 1.0}}),
                   'eos': add_v_values({'char': {'.': 1.0}}, {':function': {'const_end': 1.0}}),
                   'compare': {':function': {'compare_scalars': 1.0}},

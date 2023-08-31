@@ -35,9 +35,9 @@ def dot_product(all_inputs):
     return  {'dot': {':number': 0.0}, 'warning': {':number': 1.0}} if isinstance(result, dict) else {'dot': {':number': result}, 'warning': {':number': 0.0}}
 
 def compare_scalars(all_inputs):
-    print("all_inputs ", all_inputs)
+    #print("all_inputs ", all_inputs)
     x_dict, y_dict = getv(all_inputs, 'x'), getv(all_inputs, 'y')
-    print("v_value x_dict ", x_dict)
+    #print("v_value x_dict ", x_dict)
     x = getn(x_dict)
     y = getn(y_dict)
     return {'true': {':number': relu(x-y)}, 'false': {':number': relu(y-x)}}
