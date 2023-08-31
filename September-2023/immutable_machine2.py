@@ -46,15 +46,26 @@ initial_output = {'self': add_v_values(init_matrix, {':function': {'accum_add_ar
 
 from pprint import pprint
 
-pprint(init_matrix)
-# {'result': {'self': {':function': {'self': {':function': 1.0}},
-#                      'accum': {'self': {'result': 1.0}},
-#                      'delta': {'update-1': {'result': 1.0}}},
-#             'update-1': {':function': {'update-1': {':function': 1.0}}},
-#             'update-2': {':function': {'update-2': {':function': 1.0}}},
-#             'update-3': {':function': {'update-3': {':function': 1.0}}}}}
+from functools import reduce
 
-pprint(initial_output)
+def square(x):
+    return x * x
+
+def one_cycle(state):
+    return two_stroke_cycle(state['output'])
+
+def one_iteration(accum, y):
+    previous_dict, previous_state = accum
+    new_state = one_cycle(previous_state)
+    new_dict = {**previous_dict, **{y: new_state}}
+    return (new_dict, new_state)
+
+result, last_state = reduce(one_iteration, range(150), ({}, {'input': {}, 'output': initial_output}))
+#print(result)
+
+#pprint(init_matrix)
+
+#pprint(initial_output)
 # {'self': {':function': {'accum_add_args': 1.0},
 #           'result': {'self': {':function': {'self': {':function': 1.0}},
 #                               'accum': {'self': {'result': 1.0}},
@@ -72,11 +83,11 @@ pprint(initial_output)
 #               'result': {'self': {'delta': {'update-1': {'result': 1.0},
 #                                             'update-3': {'result': -1.0}}}}}}
 
-step1 = two_stroke_cycle(initial_output)
-pprint(step1)
-step2 = two_stroke_cycle(step1['output'])
-pprint(step2)
-step3 = two_stroke_cycle(step2['output'])
-pprint(step3)
-step4 = two_stroke_cycle(step3['output'])
-pprint(step4)
+#step1 = two_stroke_cycle(initial_output)
+#pprint(step1)
+#step2 = two_stroke_cycle(step1['output'])
+#pprint(step2)
+#step3 = two_stroke_cycle(step2['output'])
+#pprint(step3)
+#step4 = two_stroke_cycle(step3['output'])
+#pprint(step4)
