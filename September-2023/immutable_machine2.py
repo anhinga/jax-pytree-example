@@ -38,8 +38,8 @@ initial_output = {'self': add_v_values(init_matrix, {':function': {'accum_add_ar
                   'input': {':function': {'input_dummy': 1.0}},
                   'accum': {':function': {'accum_add_args': 1.0}},
                   'norm': {':function': {'max_norm_dict': 1.0}},
-                  'const_1': add_v_values({'const_1': 1.0}, {':function': {'const_1': 1.0}}),
-                  'eos': add_v_values({'const_end': 1.0}, {':function': {'const_end': 1.0}}),
+                  'const_1': add_v_values({'const_1': {':number': 1.0}}, {':function': {'const_1': 1.0}}),
+                  'eos': add_v_values({'char': {'.': 1.0}}, {':function': {'const_end': 1.0}}),
                   'compare': {':function': {'compare_scalars': 1.0}},
                   'dot': {':function': {'dot_product': 1.0}},
                   'output': {':function': {'output_dummy': 1.0}}}
