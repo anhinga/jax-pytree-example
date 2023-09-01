@@ -13,3 +13,9 @@ def getv(v_value, key):
 
 def getn(v_value):
     return v_value.get(':number', 0.0)
+
+def count(v_value):
+    return 1.0 if not isinstance(v_value, dict) else sum([0.0, *[count(v_value[key]) for key in v_value.keys()]])
+
+def map_item(jax_v_value):
+    return tree_map(lambda x: x.item(), jax_v_value) 
